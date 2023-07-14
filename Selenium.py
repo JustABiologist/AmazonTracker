@@ -4,15 +4,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.service import Service
 import time 
 from datetime import datetime
 import re
 import pandas as pd 
 import os
 import json
+import argparse
+import openpyxl
 
-driver_path = 'C:/Users/iamfl/chromedriver'
-filepathXLSX = 'C:/Users/iamfl/Desktop/Skripte/PapaFBA/FileTest/'
+#driver_path = 'C:/Users/iamfl/chromedriver'
+#filepathXLSX = 'C:/Users/iamfl/Desktop/Skripte/PapaFBA/FileTest/'
 
 def readExcel(Excelpath):
     df = pd.read_excel(Excelpath)
@@ -21,7 +24,8 @@ def readExcel(Excelpath):
 
 
 def makeCallStockAmazon(driver_path, link, sleeptime=None):
-    driver = webdriver.Chrome(executable_path=driver_path)
+    service = Service(executable_path=driver_path)
+    driver = webdriver.Chrome(service=service)
     driver.get(link)
     driver.maximize_window()
     # time.sleep(3)
@@ -43,8 +47,8 @@ def makeCallStockAmazon(driver_path, link, sleeptime=None):
     aktualisieren = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "a-autoid-2-announce")))
     aktualisieren.click()
     time.sleep(5)
-    stock = driver.find_element_by_xpath('//*[@id="sc-subtotal-label-buybox"]').text
-    price = driver.find_element_by_xpath('//*[@id="sc-subtotal-amount-activecart"]').text
+    stock = driver.find_element(By.XPATH, '//*[@id="sc-subtotal-label-buybox"]').text
+    price = driver.find_element(By.XPATH, '//*[@id="sc-subtotal-amount-activecart"]').text
 
     stock_int = int(re.findall(r'\b\d+\b', stock)[0])
     price_float = float(re.findall(r"\d+\.\d+", price)[0])
@@ -52,32 +56,46 @@ def makeCallStockAmazon(driver_path, link, sleeptime=None):
     if sleeptime:
         time.sleep(sleeptime)
     driver.quit()
-    return (link,stock_int, price_float, datetime.now.strftime("%d/%m/%Y %H"),)
+    now = datetime.now()
+    return (link,stock_int, price_float, now.strftime("%d_%m_%Y %H"),)
 
-def makeCallsFromExcel(Excelpath):
+def makeCallsFromExcel(Excelpath, driver_path):
     excel_list = readExcel(Excelpath)
     results = [makeCallStockAmazon(driver_path, address) for address in excel_list]
     return results
 
 def FileReader(dirpath):
-    return {f"{file}":pd.read_excel(dirpath+file) for file in os.listdir(dirpath)}
+    print(os.listdir(dirpath))
+    return {f"{file}":pd.read_excel(dirpath+file, engine='openpyxl') for file in os.listdir(dirpath)}
 
-def FileWebScraper(dirpath):
+def FileWebScraper(dirpath, driverpath):
     filesDict = FileReader(dirpath)
     JSON = {}
-    for fname in filesDict.keys:
+    for fname in filesDict.keys():
         link_list = filesDict[fname]['Testlinks'].values.tolist()
         JSON[fname] = {link:[] for link in link_list}
         for address in link_list:
-            current = makeCallStockAmazon(driver_path, address)
+            current = makeCallStockAmazon(driverpath, address)
             JSON[fname][address].append(current)
     return JSON
 
 
 
 def main():
-    DATA = FileWebScraper(filepathXLSX)
-    save_file = open(f"./jsonDUMP/AllDATA_{datetime.now.strftime('%d/%m/%Y %H')}.json", "w")  
+    parser = argparse.ArgumentParser(description="Selenium Programm!")
+    parser.add_argument("-c", "--chromiumpath", type= str, nargs=1, help="The chromium location for selenium")
+    parser.add_argument("-x", "--exceldir", type= str, nargs=1, help="The folder with the exceldata to be parsed")
+
+    args = parser.parse_args()
+    chromepath = args.chromiumpath[0]
+    excelpath = args.exceldir[0]
+
+    print(excelpath)
+    print(type(excelpath))
+
+    DATA = FileWebScraper(excelpath, chromepath)
+    now = datetime.now()
+    save_file = open(f"./jsonDUMP/AllDATA_{now.strftime('%d_%m_%Y %H')}.json", "w")  
     json.dump(DATA, save_file)
     save_file.close()
 
