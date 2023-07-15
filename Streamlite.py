@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+from plotting import readJSONS
 
 import Selenium
 
@@ -31,7 +32,11 @@ def FileDropdown(dirpath):
             st.success(f"Gelöschte Datei:{option}!")
     return None
 
-
+def makePlots(jsondir):
+    all_jsons = readJSONS(jsondir)
+    for dic in all_jsons:
+        prices = 
+        
 
 
         
