@@ -39,8 +39,10 @@ def makeDataframe(json_dicts, filename):
         print(j)
         row = [i, j[3], filename, j[2], j[1]]
         listDF.append(row)
-
-    return pd.DataFrame(listDF, columns=["Links", "Timestamp", "Ursprungsexcel", "Preis", "Stückzahl"])
+    df = pd.DataFrame(listDF, columns=["Links", "Timestamp", "Ursprungsexcel", "Preis", "Stückzahl"])
+    df_unique = df["Links"].unique().squeeze().tolist()
+    df_l = [df[df["Links"] == unique] for unique in df_unique]
+    return df_l
 
 #TODO 
 #Make this plottable, and bring in right order/make a df for each diffrent link from this dataframe
@@ -48,7 +50,7 @@ def makeDataframe(json_dicts, filename):
 
 def main():
     jdicts, filenames =  readJSONS("./jsonDUMP/")
-    print(makeDataframe(jdicts, filenames[0]))
+    print(makeDataframe(jdicts, filenames[0])[0])
     return 
 
 if __name__ == "__main__":
