@@ -18,22 +18,36 @@ def readJSONS(json_dir):
                     filenames.append(filename)
     return dics, filenames
 
+def flatten_concatenation(matrix):
+    flat_list = []
+    for row in matrix:
+        flat_list += row
+    return flat_list
+
 def makeDataframe(json_dicts, filename):
     '''Takes in list of all JSONS in the folder in dict format and returns a list of all the datapoints pertaining to a certain excel file'''
     dicDF = [fileDic[filename] for fileDic in json_dicts]
-    links = list(dicDF.keys)
-    values = [dicDF[link] for link in links]
+    links = [list(dic.keys()) for dic in dicDF]
+    links = flatten_concatenation(links)
+    values = []
+    for dic in dicDF:
+        for link in links:
+            values.append(dic[link])
+    values=flatten_concatenation(values)
     listDF=[]
-
     for i,j in zip(links, values):
+        print(j)
         row = [i, j[3], filename, j[2], j[1]]
         listDF.append(row)
 
     return pd.DataFrame(listDF, columns=["Links", "Timestamp", "Ursprungsexcel", "Preis", "Stückzahl"])
 
+#TODO 
+#Make this plottable, and bring in right order/make a df for each diffrent link from this dataframe
+
 
 def main():
-    jdicts, filenames =  readJSONS("./jsonDUMP")
+    jdicts, filenames =  readJSONS("./jsonDUMP/")
     print(makeDataframe(jdicts, filenames[0]))
     return 
 
