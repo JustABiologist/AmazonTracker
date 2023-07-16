@@ -85,17 +85,19 @@ def main():
     parser = argparse.ArgumentParser(description="Selenium Programm!")
     parser.add_argument("-c", "--chromiumpath", type= str, nargs=1, help="The chromium location for selenium")
     parser.add_argument("-x", "--exceldir", type= str, nargs=1, help="The folder with the exceldata to be parsed")
-
+    parser.add_argument("-o", "--output", type = str, nargs=1, help="The output folder for the .jsons")
+    
     args = parser.parse_args()
     chromepath = args.chromiumpath[0]
     excelpath = args.exceldir[0]
+    outputpath = args.output[0]
 
     print(excelpath)
     print(type(excelpath))
 
     DATA = FileWebScraper(excelpath, chromepath)
     now = datetime.now()
-    save_file = open(f"./jsonDUMP/AllDATA_{now.strftime('%d_%m_%Y %H')}.json", "w")  
+    save_file = open(outputpath + f"AllDATA_{now.strftime('%d_%m_%Y %H')}.json", "w")  
     json.dump(DATA, save_file)
     save_file.close()
 
