@@ -36,7 +36,7 @@ def makeCallStockAmazon(driver_path, link, sleeptime=None):
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument(
-    "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
+    "user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 13_4_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36")
     service = Service(executable_path=driver_path)
     driver = webdriver.Chrome(service=service, options=chrome_options)
     #driver = webdriver.Chrome()
