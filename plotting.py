@@ -60,8 +60,8 @@ def makePlot(dfs):
         plt.setp(axs, xticks=timestapm, xticklabels=timestapm)
         axs[0][0].plot(timestapm, df["Stückzahl"], label = df.iloc[0][0])
         axs[0][0].scatter(timestapm, df["Stückzahl"])
-        axs[0][0].legend()
-        
+        #axs[0][0].legend()
+
         #axs[0][0].set_xticklabels(timestapm, rotation = 25, fontdict = fontdict_xaxis)
 
     axs[0][1].set_title("Preis gegen Timestamps")

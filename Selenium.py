@@ -91,9 +91,8 @@ def main():
     chromepath = args.chromiumpath[0]
     excelpath = args.exceldir[0]
     outputpath = args.output[0]
-
-    print(excelpath)
-    print(type(excelpath))
+    display = Display(visible=0, size=(800, 600))
+    display.start()
 
     DATA = FileWebScraper(excelpath, chromepath)
     now = datetime.now()
