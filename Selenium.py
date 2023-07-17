@@ -43,7 +43,7 @@ def makeCallStockAmazon(driver_path, link, sleeptime=None):
     driver.get(link)
     driver.maximize_window()
     # time.sleep(3)
-    driver.implicitly_wait(20)
+    driver.implicitly_wait(2)
     cookie_button = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "sp-cc-rejectall-link")))
     #cookie_button = driver.find_element(By.XPATH,"//span[contains(text(),'//label[contains(text(), 'Menge')]')]")
     cookie_button.click()
