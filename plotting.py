@@ -41,6 +41,7 @@ def makeDataframe(json_dicts, filename):
         row = [j[0], j[3], filename, j[2], j[1]]
         listDF.append(row)
     df = pd.DataFrame(listDF, columns=["Links", "Timestamp", "Ursprungsexcel", "Preis", "Stückzahl"])
+    df['Timestamp'] = pd.to_datetime(df["Timestamp"], format='%d_%m_%Y %H')
     df_unique = df["Links"].unique().squeeze().tolist()
     df_l = [df[df["Links"] == unique] for unique in df_unique]
     return df_l
@@ -56,10 +57,10 @@ def makePlot(dfs):
     
     for df in dfs:
         df = df.sort_values("Timestamp") #Very hacky wont work in August
-        timestapm = [datetime.strptime(time, '%d_%m_%Y %H') for time in df["Timestamp"].values.tolist()]
-        plt.setp(axs, xticks=timestapm, xticklabels=timestapm)
-        axs[0][0].plot(timestapm, df["Stückzahl"], label = df.iloc[0][0])
-        axs[0][0].scatter(timestapm, df["Stückzahl"])
+        #timestapm = [datetime.strptime(time, '%d_%m_%Y %H') for time in df["Timestamp"].values.tolist()]
+        plt.setp(axs, xticks=df["Timestamp"], xticklabels=df["Timestamp"])
+        axs[0][0].plot(df["Timestamp"], df["Stückzahl"], label = df.iloc[0][0])
+        axs[0][0].scatter(df["Timestamp"], df["Stückzahl"])
         #axs[0][0].legend()
 
         #axs[0][0].set_xticklabels(timestapm, rotation = 25, fontdict = fontdict_xaxis)

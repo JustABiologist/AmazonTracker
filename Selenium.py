@@ -4,7 +4,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
-from pyvirtualdisplay import Display
 
 
 from selenium.webdriver.common.action_chains import ActionChains
@@ -120,11 +119,11 @@ if __name__ == "__main__":
 
 #TODO
 '''
-Make a webserver and GUI
-Test on Excelsheet providwed by dad
-Schedule jobs
-Run on Raspi
-
+FINISH webserver and plots up.
+Make datetime sorting of datapoints possible.
+Deploy to a website 
+Make a username password base 
+.
 
 Erledigt:
 Cookies
@@ -136,5 +135,9 @@ auslesen
 Extract price per Item !
 return tuple of price, link, link and exact date of extraction!
 Output auslesen
+Test on Excelsheet providwed by dad
+Schedule jobs
+Run on Raspi
+
 '''
 
