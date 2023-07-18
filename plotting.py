@@ -56,14 +56,14 @@ def makePlot(dfs):
     axs[0][0].xaxis.set_major_formatter(xmfd)
     
     for df in dfs:
-        df = df.sort_values("Timestamp") #Very hacky wont work in August
+        df = df.sort_values("Timestamp") #Now it works as intended :3
         #timestapm = [datetime.strptime(time, '%d_%m_%Y %H') for time in df["Timestamp"].values.tolist()]
         plt.setp(axs, xticks=df["Timestamp"], xticklabels=df["Timestamp"])
+        axs[0][0].set_xticklabels(df["Timestamp"], rotation=30, ha='right', fontdict = {'fontsize': 6})
+        plt.xticks()
         axs[0][0].plot(df["Timestamp"], df["Stückzahl"], label = df.iloc[0][0])
         axs[0][0].scatter(df["Timestamp"], df["Stückzahl"])
         #axs[0][0].legend()
-
-        #axs[0][0].set_xticklabels(timestapm, rotation = 25, fontdict = fontdict_xaxis)
 
     axs[0][1].set_title("Preis gegen Timestamps")
     axs[1][0].set_title("Verkäufe gegen Timestamps")
