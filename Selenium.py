@@ -27,7 +27,7 @@ def readExcel(Excelpath):
     return df['Testlinks'].values.tolist()
 
 def random_agent(filename):
-    with open(path_to_file) as input_file:
+    with open(filename) as input_file:
         head = [next(input_file) for _ in range(20)]
     return random.choice(head)
 
