@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
+import random
 
 
 from selenium.webdriver.common.action_chains import ActionChains
@@ -45,14 +46,14 @@ def makeCallStockAmazon(driver_path, link, sleeptime=None):
     cookie_button = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "sp-cc-rejectall-link")))
     #cookie_button = driver.find_element(By.XPATH,"//span[contains(text(),'//label[contains(text(), 'Menge')]')]")
     cookie_button.click()
-    time.sleep(3)
+    time.sleep(random.randint(0,10))
     cart_button = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "add-to-cart-button")))
     cart_button.click()
     driver.get("https://www.amazon.de/cart?ref_=sw_gtc")
-    time.sleep(5)
+    time.sleep(random.randint(0,10))
     dropdown = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "a-autoid-1")))
     dropdown.click()
-    time.sleep(5)
+    time.sleep(random.randint(0,10))
     dropdown_option = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "quantity_10")))
     #dropdown_option = driver.find_element(By.ID, "quantity_10")
     dropdown_option.click()
@@ -61,7 +62,7 @@ def makeCallStockAmazon(driver_path, link, sleeptime=None):
     actions.perform()
     aktualisieren = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "a-autoid-2-announce")))
     aktualisieren.click()
-    time.sleep(5)
+    time.sleep(random.randint(0,10))
     stock = driver.find_element(By.XPATH, '//*[@id="sc-subtotal-label-buybox"]').text
     price = driver.find_element(By.XPATH, '//*[@id="sc-subtotal-amount-activecart"]').text
 
