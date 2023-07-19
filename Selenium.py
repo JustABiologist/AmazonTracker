@@ -43,7 +43,7 @@ def makeCallStockAmazon(driver_path, link, sleeptime=None):
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument(f"user-agent={agent}")
+    chrome_options.add_argument(f"--user-agent={agent}")
     #service = Service(executable_path=driver_path)
     #driver = webdriver.Chrome(service=service, options=chrome_options)
     driver = webdriver.Chrome(options=chrome_options)
