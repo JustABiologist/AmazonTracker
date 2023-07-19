@@ -36,7 +36,7 @@ def random_agent(filename):
 def makeCallStockAmazon(driver_path, link, sleeptime=None):
 
     browser = random.choice(['Firefox','Internet+Explorer','Opera','Safari','Chrome','Edge','Android+Webkit+Browser'])
-    agent = random_agent(browser+'.txt')
+    agent = random_agent('~/AmazonTracker/'+browser+'.txt')
     
     chrome_options = Options()
     chrome_options.add_argument('--no-sandbox')
