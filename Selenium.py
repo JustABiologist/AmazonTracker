@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 import random
+from itertools import islice
 
 
 from selenium.webdriver.common.action_chains import ActionChains
@@ -27,9 +28,9 @@ def readExcel(Excelpath):
     return df['Testlinks'].values.tolist()
 
 def random_agent(filename):
-    with open(filename) as myfile:
-        firstNlines=myfile.readlines()[0:5]
-    return random.choice(firstNlines)
+    with open(filename) as input_file:
+        head = list(islice(input_file, 10))
+    return random.choice(head)
 
 
 def makeCallStockAmazon(driver_path, link, sleeptime=None):
