@@ -36,9 +36,9 @@ def makeCallStockAmazon(driver_path, link, sleeptime=None):
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument(
     "user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 13_4_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36")
-    service = Service(executable_path=driver_path)
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-    #driver = webdriver.Chrome()
+    #service = Service(executable_path=driver_path)
+    #driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
     driver.get(link)
     driver.maximize_window()
     # time.sleep(3)
