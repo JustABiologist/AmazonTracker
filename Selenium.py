@@ -26,8 +26,16 @@ def readExcel(Excelpath):
     print(df)
     return df['Testlinks'].values.tolist()
 
+def random_agent(filename):
+    with open(path_to_file) as input_file:
+        head = [next(input_file) for _ in range(20)]
+    return random.choice(head)
+
 
 def makeCallStockAmazon(driver_path, link, sleeptime=None):
+
+    browser = random.choice(['Firefox','Internet+Explorer','Opera','Safari','Chrome','Edge','Android+Webkit+Browser'])
+    agent = random_agent(browser+'.txt')
     
     chrome_options = Options()
     chrome_options.add_argument('--no-sandbox')
@@ -35,8 +43,7 @@ def makeCallStockAmazon(driver_path, link, sleeptime=None):
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument(
-    "user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 13_4_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36")
+    chrome_options.add_argument(f"user-agent={agent}")
     #service = Service(executable_path=driver_path)
     #driver = webdriver.Chrome(service=service, options=chrome_options)
     driver = webdriver.Chrome(options=chrome_options)
