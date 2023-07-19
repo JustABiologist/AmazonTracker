@@ -27,9 +27,9 @@ def readExcel(Excelpath):
     return df['Testlinks'].values.tolist()
 
 def random_agent(filename):
-    with open(filename) as input_file:
-        head = [next(input_file) for _ in range(20)]
-    return random.choice(head)
+    with open(filename) as myfile:
+        firstNlines=myfile.readlines()[0:5]
+    return random.choice(firstNlines)
 
 
 def makeCallStockAmazon(driver_path, link, sleeptime=None):
