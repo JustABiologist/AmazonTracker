@@ -62,7 +62,7 @@ def makeCallStockAmazon(driver_path, link, sleeptime=None):
     driver.get("https://www.amazon.de/cart?ref_=sw_gtc")
     time.sleep(random.randint(0,10))
     dropdown = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "a-autoid-1")))
-    time.sleep(random.randint(4,10))
+    time.sleep(random.randint(10,25))
     dropdown.click()
     time.sleep(random.randint(0,10))
     dropdown_option = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "quantity_10")))

@@ -57,6 +57,7 @@ def makePlot(dfs):
     
     for df in dfs:
         df = df.sort_values("Timestamp") #Now it works as intended :3
+        df['Actually sold']=df['Stückzahl'].diff().fillna(df['Stückzahl'])
         #timestapm = [datetime.strptime(time, '%d_%m_%Y %H') for time in df["Timestamp"].values.tolist()]
         plt.setp(axs, xticks=df["Timestamp"], xticklabels=df["Timestamp"])
         axs[0][0].set_xticklabels(df["Timestamp"], rotation=30, ha='right', fontdict = {'fontsize': 6})
